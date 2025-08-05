@@ -32,18 +32,37 @@ const addSalary = async (req, res) => {
   }
 };
 
-const getSalary = async (req,res)=>{
+const getSalary = async (req, res) => {
   try {
-    const {id} = req.params;
-    let salary = await Salary.find({employeeId:id}).populate('employeeId','employeeId')
-    if(!salary || salary.length < 1){
-      const employee = await Employee.findOne({userId:id})
-      salary = await Salary.find({employeeId: employee._id}).populate('employeeId','employeeId')
+    const { id } = req.params;
+
+    // Try direct employeeId
+    let salary = await Salary.find({ employeeId: id }).populate('employeeId', 'employeeId');
+
+    if (!salary || salary.length === 0) {
+      // Try resolving employee by userId
+      const employee = await Employee.findOne({ userId: id });
+
+      if (employee) {
+
+        salary = await Salary.find({ employeeId: employee._id }).populate('employeeId', 'employeeId');
+      } else {
+      }
     }
-    return res.status(200).json({ success: true,salary });
+
+    // Final check if salary was found
+    if (!salary || salary.length === 0) {
+      return res.status(200).json({ success: true, salary: [] }); // Return empty array, not 404
+    }
+
+    return res.status(200).json({ success: true, salary });
   } catch (error) {
     return res.status(500).json({ success: false, error: 'Salary Get Server Error' });
   }
-}
+};
+
+
+
+
 
 export { addSalary,getSalary };

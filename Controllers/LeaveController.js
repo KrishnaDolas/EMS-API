@@ -3,7 +3,6 @@ import Employee from '../Modules/Employee.js';
 
 const addLeave = async (req, res) => {
   try {
-    console.log('Incoming body:', req.body);
 
     const { userId, leaveType, startDate, endDate, reason } = req.body;
 
@@ -13,7 +12,6 @@ const addLeave = async (req, res) => {
 
     // ✅ Find the Employee that matches this userId
     const employee = await Employee.findOne({ userId: userId });
-    console.log('Found employee:', employee);
 
     if (!employee) {
       return res.status(404).json({ success: false, error: "No Employee found for given userId" });
@@ -30,11 +28,9 @@ const addLeave = async (req, res) => {
 
     await newLeave.save();
 
-    console.log('Leave saved:', newLeave);
 
     return res.status(200).json({ success: true, leave: newLeave });
   } catch (error) {
-    console.error('Leave Add Error:', error);
     return res.status(500).json({ success: false, error: 'Leave Add Server Error' });
   }
 };
