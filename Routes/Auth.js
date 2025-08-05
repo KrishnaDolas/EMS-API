@@ -8,9 +8,9 @@ const router = express.Router();
 router.post('/login', login);
 
 // Verify route with middleware
-router.post('/verify', AuthMiddleware, (req, res) => {
+router.post('/verify', AuthMiddleware, (req, res) => {          
     // On successful middleware, send user info
     return res.status(200).json({ success: true, user: req.user });
 });
-
+    
 export default router;
