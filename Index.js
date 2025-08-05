@@ -18,8 +18,8 @@ connectToDatabase();
 const app = express();
 
 app.use(cors()); // Allow all origins
-app.use(express.json());
-app.use(express.static('Public/Uploads'))
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 // Mount the auth routes under /api/auth
 app.use('/api/auth', authRouter);
