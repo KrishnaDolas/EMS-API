@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import User from '../Modules/User.js';
 
-const verifyUser = async (req, res, next) => {
+const AuthMiddleware = async (req, res, next) => {
   try {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1]; // Bearer token
@@ -29,4 +29,4 @@ const verifyUser = async (req, res, next) => {
   }
 };
 
-export default verifyUser;
+export default AuthMiddleware;

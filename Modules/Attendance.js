@@ -1,8 +1,8 @@
-import mongoose, { Mongoose } from 'mongoose'
+import mongoose from 'mongoose';
 
-const AttendanceSchema = new Mongoose.Schema({
-    data : {
-        type : 'String', //format yy-mm-dd
+const AttendanceSchema = new mongoose.Schema({
+    date : {
+        type : String, //format yy-mm-dd
         required : true
     },
     employeeId : {
@@ -17,6 +17,5 @@ const AttendanceSchema = new Mongoose.Schema({
     }
 })
 
-const Attendance = mongoose.model('Attendance',AttendanceSchema)
+export const Attendance = mongoose.model('Attendance',AttendanceSchema)
 
-export default Attendance;
